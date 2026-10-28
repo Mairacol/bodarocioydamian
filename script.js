@@ -175,7 +175,7 @@ function handleRSVP(event) {
             restricciones: dietInput ? dietInput.value : ''
         });
     });
-
+    
     const payload = {
         invitadoPrincipal: mainGuest,
         mensaje: message,

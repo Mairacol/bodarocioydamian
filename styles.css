@@ -692,3 +692,17 @@ select.input-guest-diet {
         gap: 10px;
     }
 }
+.btn-toggle-bank {
+    background-color: transparent;
+    border: 1px solid #333; /* Cambia el color del borde según tu paleta */
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.btn-toggle-bank:hover {
+    background-color: #333;
+    color: #fff;
+}

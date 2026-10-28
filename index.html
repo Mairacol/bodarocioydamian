@@ -103,28 +103,33 @@
            <!--  <p class="disclaimer-text">Reservamos el uso de blancos, cremas y nudes exclusivamente para la novia.</p> -->
         </div>
     </section>
+<!-- REGALOS -->
+<section class="section bg-soft">
+    <div class="container fade-in">
+        <p class="section-label">PRESENTES</p>
+        <h2>Mesa de Regalos</h2>
+        <p class="gift-text">Tu presencia es nuestro mejor regalo. Si deseas realizar un presente:</p>
+        
+        
+        <button type="button" class="btn-toggle-bank" onclick="toggleBankDetails()" id="toggle-bank-btn">
+            Ver datos bancarios
+        </button>
 
-    <!-- REGALOS -->
-    <section class="section bg-soft">
-        <div class="container fade-in">
-            <p class="section-label">PRESENTES</p>
-            <h2>Mesa de Regalos</h2>
-            <p class="gift-text">Tu presencia es nuestro mejor regalo. Si deseas realizar un presente:</p>
-            
-            <div class="bank-clean">
-                <div class="bank-row">
-                    <p><span>ALIAS:</span> <strong id="alias-text">boda.rocio.damian</strong></p>
-                    <button type="button" class="btn-copy-underline" onclick="copyAlias()">COPIAR ALIAS →</button>
-                </div>
-                <div class="bank-row">
-                    <p><span>CBU:</span> 0000000000000000000000</p>
-                </div>
-                <div class="bank-row">
-                    <p><span>TITULAR:</span> Rocío & Damián</p>
-                </div>
+        
+        <div class="bank-clean" id="bank-details" style="display: none;">
+            <div class="bank-row">
+                <p><span>ALIAS:</span> <strong id="alias-text">boda.rocio.damian</strong></p>
+                <button type="button" class="btn-copy-underline" onclick="copyAlias()">COPIAR ALIAS →</button>
+            </div>
+            <div class="bank-row">
+                <p><span>CBU:</span> 0000000000000000000000</p>
+            </div>
+            <div class="bank-row">
+                <p><span>TITULAR:</span> Rocío & Damián</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
  <!-- RSVP -->
 <section class="section" id="rsvp">

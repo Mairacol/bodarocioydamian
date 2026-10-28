@@ -263,7 +263,18 @@ function handleRSVP(event) {
         }
     });
 }
-
+function toggleBankDetails() {
+    const bankDetails = document.getElementById('bank-details');
+    const toggleBtn = document.getElementById('toggle-bank-btn');
+    
+    if (bankDetails.style.display === 'none') {
+        bankDetails.style.display = 'block';
+        toggleBtn.textContent = 'Ocultar datos bancarios';
+    } else {
+        bankDetails.style.display = 'none';
+        toggleBtn.textContent = 'Ver datos bancarios';
+    }
+}
 function copyAlias() {
     const aliasElem = document.getElementById('alias-text');
     if (!aliasElem) return;
@@ -273,7 +284,7 @@ function copyAlias() {
         if (btn) {
             btn.innerText = '¡COPIADO!';
             setTimeout(() => {
-                btn.innerText = 'COPIAR ALIAS →';
+                btn.innerText = 'COPIAR →';
             }, 2000);
         }
     });

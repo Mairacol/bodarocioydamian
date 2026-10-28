@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Inicializar Personalización por URL
     initCustomRSVP();
 });
+
 function initCustomRSVP() {
     let queryString = window.location.search;
     if (!queryString && window.location.hash.includes('?')) {
@@ -51,13 +52,8 @@ function initCustomRSVP() {
     if (noAccessContainer) noAccessContainer.style.display = 'none';
 
     // PARAMETROS ABREVIADOS
-    // 1. 'pases' o 'cupos' (por defecto 1)
     const passesParam = parseInt(urlParams.get('pases') || urlParams.get('cupos')) || 1;
-    
-    // 2. 'g' para género ('f' o 'm')
     const gParam = (urlParams.get('g') || '').toLowerCase(); 
-
-    // 3. 'venue' para control de celebraciones ('cyf' = Civil y Fiesta)
     const venueParam = (urlParams.get('venue') || '').toLowerCase();
 
     // CONTROL DE VISIBILIDAD DEL CIVIL
@@ -76,11 +72,11 @@ function initCustomRSVP() {
     const vipLabelElem = document.querySelector('.vip-label');
     if (vipLabelElem) {
         if (passesParam > 1) {
-            vipLabelElem.innerText = "INVITACIÓN EXCLUSIVA PARA ";
+            vipLabelElem.innerText = "INVITACIÓN EXCLUSIVA PARA LOS INVITADOS";
         } else if (gParam === 'f') {
-            vipLabelElem.innerText = "INVITACIÓN EXCLUSIVA PARA ";
+            vipLabelElem.innerText = "INVITACIÓN EXCLUSIVA PARA LA INVITADA";
         } else {
-            vipLabelElem.innerText = "INVITACIÓN EXCLUSIVA PARA";
+            vipLabelElem.innerText = "INVITACIÓN EXCLUSIVA PARA EL INVITADO";
         }
     }
 
@@ -106,7 +102,6 @@ function initCustomRSVP() {
         
         const defaultInputValue = (i === 1 && firstGuestName !== "Invitado") ? firstGuestName : '';
 
-        // Título individual en la tarjeta del formulario
         let guestTitle = `INVITADO ${i}`;
         if (passesParam === 1 && gParam === 'f') {
             guestTitle = `INVITADA`;
@@ -140,6 +135,7 @@ function initCustomRSVP() {
         container.appendChild(guestBox);
     }
 }
+
 function handleRSVP(event) {
     event.preventDefault();
 
@@ -186,14 +182,21 @@ function handleRSVP(event) {
     fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify(payload)
     })
     .then(() => {
         const rsvpForm = document.getElementById('rsvp-form');
+        const vipCard = document.querySelector('.vip-card');
+        const passesCount = document.getElementById('rsvp-passes-count');
         const successMsg = document.getElementById('rsvp-success-msg');
         
+        // Ocultar la tarjeta VIP, el contador y el formulario
         if (rsvpForm) rsvpForm.style.display = 'none';
+        if (vipCard) vipCard.style.display = 'none';
+        if (passesCount) passesCount.style.display = 'none';
+
+        // Mostrar solo el mensaje de éxito
         if (successMsg) successMsg.style.display = 'block';
     })
     .catch(error => {

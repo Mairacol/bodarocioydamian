@@ -87,8 +87,10 @@ function initCustomRSVP() {
     const passesCountElem = document.getElementById('rsvp-passes-count');
     if (passesCountElem) passesCountElem.innerText = `LUGARES DISPONIBLES: ${passesParam}`;
 
-    // Extraer primer nombre para autocompletar el campo 1
+    // Extraer primer nombre/apellido tentativo para autocompletar el campo 1
     let firstGuestName = guestParamRaw.split(/ y | e | & |,/i)[0].trim();
+    let defaultFirstName = (firstGuestName !== "Invitado") ? firstGuestName.split(' ')[0] : '';
+    let defaultLastName = (firstGuestName !== "Invitado") ? firstGuestName.split(' ').slice(1).join(' ') : '';
 
     // GENERAR CAMPOS DE FORMULARIO
     const container = document.getElementById('guests-fields-container');
@@ -100,7 +102,8 @@ function initCustomRSVP() {
         const guestBox = document.createElement('div');
         guestBox.className = 'guest-card-item';
         
-        const defaultInputValue = (i === 1 && firstGuestName !== "Invitado") ? firstGuestName : '';
+        const firstNameValue = (i === 1) ? defaultFirstName : '';
+        const lastNameValue = (i === 1) ? defaultLastName : '';
 
         let guestTitle = `INVITADO ${i}`;
         if (passesParam === 1 && gParam === 'f') {
@@ -113,7 +116,11 @@ function initCustomRSVP() {
             <p class="guest-item-title">${guestTitle}</p>
 
             <div class="field">
-                <input type="text" class="input-guest-name" placeholder="Nombre completo" required value="${defaultInputValue}">
+                <input type="text" class="input-guest-firstname" placeholder="Nombre" required value="${firstNameValue}">
+            </div>
+
+            <div class="field">
+                <input type="text" class="input-guest-lastname" placeholder="Apellido" required value="${lastNameValue}">
             </div>
 
             <div class="field">
@@ -129,7 +136,13 @@ function initCustomRSVP() {
             </div>
 
             <div class="field">
-                <input type="text" class="input-guest-diet" placeholder="Menú especial / Restricciones alimentarias (opcional)">
+                <label class="field-label">TIPO DE MENÚ</label>
+                <select class="input-guest-diet">
+                    <option value="Menú general" selected>Menú general</option>
+                    <option value="Sin TACC">Sin TACC</option>
+                    <option value="Vegetariano">Vegetariano</option>
+                    <option value="Vegano">Vegano</option>
+                </select>
             </div>
         `;
         container.appendChild(guestBox);
@@ -161,14 +174,19 @@ function handleRSVP(event) {
     const guestsList = [];
 
     guestCards.forEach((card, index) => {
-        const nameInput = card.querySelector('.input-guest-name');
+        const firstNameInput = card.querySelector('.input-guest-firstname');
+        const lastNameInput = card.querySelector('.input-guest-lastname');
         const attendanceRadio = card.querySelector(`input[name="attendance_${index + 1}"]:checked`);
-        const dietInput = card.querySelector('.input-guest-diet');
+        const dietSelect = card.querySelector('.input-guest-diet');
+
+        const firstName = firstNameInput ? firstNameInput.value.trim() : '';
+        const lastName = lastNameInput ? lastNameInput.value.trim() : '';
+        const fullName = `${firstName} ${lastName}`.trim();
 
         guestsList.push({
-            nombre: nameInput ? nameInput.value : '',
+            nombre: fullName,
             asistencia: attendanceRadio ? attendanceRadio.value : 'Confirmado',
-            restricciones: dietInput ? dietInput.value : ''
+            restricciones: dietSelect ? dietSelect.value : 'Menú general'
         });
     });
 

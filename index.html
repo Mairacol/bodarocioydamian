@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rocío & Damián — Boda</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="loader">
+        <span class="loader-names">R & D</span>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="hero-magazine">
+        <div class="hero-bg">
+            <img src="/ca04094b-0a6a-4bfb-8898-ab6d1771920b.jpg" alt="Rocío & Damián">
+            <div class="hero-vignette"></div>
+        </div>
+        
+        <div class="hero-content-top fade-in">
+            <p class="hero-tag">¡NOS CASAMOS!</p>
+            <h1 class="hero-title-editorial">ROCÍO <span>&</span> DAMIÁN</h1>
+            <p class="hero-date-editorial">24 . 04 . 2027</p>
+        </div>
+
+        <div class="scroll-minimal">
+            <span>DESCUBRIR</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- FRASE -->
+    <section class="section">
+        <div class="container fade-in">
+            <span class="editorial-monogram">R & D</span>
+            <p class="poetic-quote">
+                “El amor nos encontró, nos eligió y hoy lo queremos celebrar.”
+            </p>
+        </div>
+    </section>
+    <!-- FOTO DESTACADA -->
+    <section class="section-photo">
+        <div class="photo-container fade-in">
+            <div class="photo-wrapper">
+                <img src="/5eda1440-27a6-4010-b1da-3adb0e728303.jpg" alt="Rocío y Damián">
+            </div>
+            <span class="photo-caption">24.04.2027</span>
+        </div>
+    </section>
+
+    <!-- CRONOGRAMA ELEGANTE -->
+    <section class="section bg-soft">
+        <div class="container fade-in">
+            <p class="section-label"></p>
+            <h2>Celebraciones</h2>
+
+            <div class="timeline-clean">
+                <div class="timeline-item">
+                    <span class="item-tag">CIVIL</span>
+                    <h3>Viernes 16 de Abril, 2027</h3>
+                    <p class="item-venue">Registro Civil de San Miguel</p>
+                    <div class="item-links">
+                        <a href="https://maps.app.goo.gl/43RGAZiZF9hsnbQr9" target="_blank">VER MAPA →</a>
+                        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Civil+Roc%C3%ADo+%26+Dami%C3%A1n&dates=20270416/20270417&details=Civil+en+Registro+Civil+de+San+Miguel&sf=true&output=xml" target="_blank">AGENDAR →</a>
+                    </div>
+                </div>
+
+                <div class="timeline-divider"></div>
+
+                <div class="timeline-item">
+                    <span class="item-tag">CEREMONIA & FIESTA</span>
+                    <h3>Sábado 24 de Abril, 2027</h3>
+                    <p class="item-venue">Buenos Aires Golf Club</p>
+                    <div class="item-links">
+                        <a href="https://maps.google.com/?q=Buenos+Aires+Golf+Club" target="_blank">VER MAPA →</a>
+                        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+Roc%C3%ADo+%26+Dami%C3%A1n&dates=20270424/20270425&details=Boda+en+Buenos+Aires+Golf+Club&sf=true&output=xml" target="_blank">AGENDAR →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DRESS CODE -->
+    <section class="section">
+        <div class="container fade-in">
+            <p class="section-label">DRESS CODE</p>
+            <h2>Elegante</h2>
+            <p class="dress-sub">Vestido largo • Traje formal</p>
+            
+      
+            
+           <!--  <p class="disclaimer-text">Reservamos el uso de blancos, cremas y nudes exclusivamente para la novia.</p> -->
+        </div>
+    </section>
+
+    <!-- REGALOS -->
+    <section class="section bg-soft">
+        <div class="container fade-in">
+            <p class="section-label">PRESENTES</p>
+            <h2>Mesa de Regalos</h2>
+            <p class="gift-text">Tu presencia es nuestro mejor regalo. Si deseas realizar un presente:</p>
+            
+            <div class="bank-clean">
+                <div class="bank-row">
+                    <p><span>ALIAS:</span> <strong id="alias-text">boda.rocio.damian</strong></p>
+                    <button type="button" class="btn-copy-underline" onclick="copyAlias()">COPIAR ALIAS →</button>
+                </div>
+                <div class="bank-row">
+                    <p><span>CBU:</span> 0000000000000000000000</p>
+                </div>
+                <div class="bank-row">
+                    <p><span>TITULAR:</span> Rocío & Damián</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP -->
+    <section class="section" id="rsvp">
+        <div class="container fade-in">
+            <p class="section-label">CONFIRMACIÓN DE ASISTENCIA</p>
+            <h2>RSVP</h2>
+            <p class="rsvp-passes-count" id="rsvp-passes-count">LUGARES DISPONIBLES: 1</p>
+
+            <!-- Tarjeta de Invitación Exclusiva -->
+            <div class="vip-card">
+                <p class="vip-label">INVITACIÓN EXCLUSIVA PARA</p>
+                <h3 class="vip-name" id="vip-guest-name">Invitado</h3>
+                <p class="vip-deadline">POR FAVOR, CONFIRMA TU ASISTENCIA ANTES DEL 01 DE FEBRERO</p>
+            </div>
+
+            <!-- Formulario dinámico -->
+            <form id="rsvp-form" class="form-clean" onsubmit="handleRSVP(event)">
+                <div id="guests-fields-container">
+                    <!-- Se puebla con JS -->
+                </div>
+
+                <div class="field" style="margin-top: 20px;">
+                    <input type="text" id="guest-message" placeholder="Mensaje para los novios (opcional)">
+                </div>
+<br>
+                <button type="submit" id="btn-submit-rsvp" class="btn-solid">CONFIRMAR ASISTENCIA</button>
+            </form>
+
+            <div id="rsvp-success-msg" style="display: none;" class="success-clean">
+                <h3>¡Muchas Gracias!</h3>
+                <p>Tu respuesta ha sido registrada con éxito.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- DRIVE -->
+    <section class="section bg-soft">
+        <div class="container fade-in">
+            <p class="section-label">MEMORIAS</p>
+            <h2>Álbum Compartido</h2>
+            <p class="gift-text">Subí tus fotos y videos para revivir este día juntos.</p>
+            <a href="#" class="btn-clean dark">SUBIR ↑</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>Una experiencia creada por <a href="https://atelierinvitaciones.com/" target="_blank">Atelier Invitaciones</a></p>
+    </footer>
+
+    <script src="/script.js"></script>
+</body>
+</html>

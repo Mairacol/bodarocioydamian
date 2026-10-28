@@ -1,4 +1,4 @@
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/TU_SCRIPT_ID_AQUI/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxEGCcH-vkVcfdQ5vz7MLoHvvQRyMxSuberhjF8pEcz4D-xf35E270qNcw3AkynA5dT/exec";
 
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Ocultar Loader
@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Inicializar Personalización por URL
     initCustomRSVP();
 });
-
 function initCustomRSVP() {
     let queryString = window.location.search;
     if (!queryString && window.location.hash.includes('?')) {
@@ -34,15 +33,56 @@ function initCustomRSVP() {
     }
 
     const urlParams = new URLSearchParams(queryString);
+    const rawGuestParam = urlParams.get('invitado');
+
+    // Referencias al DOM
+    const rsvpContainer = document.getElementById('rsvp-form-container'); 
+    const noAccessContainer = document.getElementById('rsvp-no-access');   
+    const civilItem = document.getElementById('civil-item');
+
+    // VALIDACIÓN DE ACCESO AL RSVP
+    if (!rawGuestParam) {
+        if (rsvpContainer) rsvpContainer.style.display = 'none';
+        if (noAccessContainer) noAccessContainer.style.display = 'block';
+        return; 
+    }
+
+    if (rsvpContainer) rsvpContainer.style.display = 'block';
+    if (noAccessContainer) noAccessContainer.style.display = 'none';
+
+    // PARAMETROS ABREVIADOS
+    // 1. 'pases' o 'cupos' (por defecto 1)
+    const passesParam = parseInt(urlParams.get('pases') || urlParams.get('cupos')) || 1;
     
-    // Obtener y limpiar el parámetro 'invitado' reemplazando '+' por espacios
-    let guestParamRaw = urlParams.get('invitado') || "Invitado";
-    guestParamRaw = decodeURIComponent(guestParamRaw.replace(/\+/g, ' '));
+    // 2. 'g' para género ('f' o 'm')
+    const gParam = (urlParams.get('g') || '').toLowerCase(); 
 
-    const passesParam = parseInt(urlParams.get('cupos')) || 1;
+    // 3. 'venue' para control de celebraciones ('cyf' = Civil y Fiesta)
+    const venueParam = (urlParams.get('venue') || '').toLowerCase();
 
-    // Extraer solo el primer nombre para el campo "INVITADO 1" (ej: de "Maira y Acompañante" extrae "Maira")
-    let firstGuestName = guestParamRaw.split(/ y | e | & |,/i)[0].trim();
+    // CONTROL DE VISIBILIDAD DEL CIVIL
+    if (civilItem) {
+        if (venueParam === 'cyf' || urlParams.get('civil') === '1') {
+            civilItem.style.display = 'block';
+        } else {
+            civilItem.style.display = 'none';
+        }
+    }
+
+    // FORMATEAR NOMBRE DEL INVITADO PRINCIPAL
+    let guestParamRaw = decodeURIComponent(rawGuestParam.replace(/\+/g, ' '));
+
+    // ETIQUETA ADAPTATIVA SEGÚN ABREVIATURAS
+    const vipLabelElem = document.querySelector('.vip-label');
+    if (vipLabelElem) {
+        if (passesParam > 1) {
+            vipLabelElem.innerText = "INVITACIÓN EXCLUSIVA PARA LOS INVITADOS";
+        } else if (gParam === 'f') {
+            vipLabelElem.innerText = "INVITACIÓN EXCLUSIVA PARA LA INVITADA";
+        } else {
+            vipLabelElem.innerText = "INVITACIÓN EXCLUSIVA PARA EL INVITADO";
+        }
+    }
 
     // Actualizar datos en la tarjeta VIP
     const vipNameElem = document.getElementById('vip-guest-name');
@@ -51,7 +91,10 @@ function initCustomRSVP() {
     const passesCountElem = document.getElementById('rsvp-passes-count');
     if (passesCountElem) passesCountElem.innerText = `LUGARES DISPONIBLES: ${passesParam}`;
 
-    // Generar dinámicamente las tarjetas por invitado
+    // Extraer primer nombre para autocompletar el campo 1
+    let firstGuestName = guestParamRaw.split(/ y | e | & |,/i)[0].trim();
+
+    // GENERAR CAMPOS DE FORMULARIO
     const container = document.getElementById('guests-fields-container');
     if (!container) return;
     
@@ -61,11 +104,18 @@ function initCustomRSVP() {
         const guestBox = document.createElement('div');
         guestBox.className = 'guest-card-item';
         
-        // Autocompleta con "Maira" solo en Invitado 1
         const defaultInputValue = (i === 1 && firstGuestName !== "Invitado") ? firstGuestName : '';
 
+        // Título individual en la tarjeta del formulario
+        let guestTitle = `INVITADO ${i}`;
+        if (passesParam === 1 && gParam === 'f') {
+            guestTitle = `INVITADA`;
+        } else if (passesParam === 1) {
+            guestTitle = `INVITADO`;
+        }
+
         guestBox.innerHTML = `
-            <p class="guest-item-title">INVITADO ${i}</p>
+            <p class="guest-item-title">${guestTitle}</p>
 
             <div class="field">
                 <input type="text" class="input-guest-name" placeholder="Nombre completo" required value="${defaultInputValue}">
@@ -90,7 +140,6 @@ function initCustomRSVP() {
         container.appendChild(guestBox);
     }
 }
-
 function handleRSVP(event) {
     event.preventDefault();
 

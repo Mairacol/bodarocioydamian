@@ -54,13 +54,16 @@
         </div>
     </section>
 
-    <!-- CRONOGRAMA ELEGANTE -->
-    <section class="section bg-soft">
-        <div class="container fade-in">
-            <p class="section-label"></p>
-            <h2>Celebraciones</h2>
+   <!-- CRONOGRAMA ELEGANTE -->
+<section class="section bg-soft">
+    <div class="container fade-in">
+        <p class="section-label"></p>
+        <h2>Celebraciones</h2>
 
-            <div class="timeline-clean">
+        <div class="timeline-clean">
+            
+            <!-- BLOQUE CIVIL  -->
+            <div id="civil-item" style="display: none;">
                 <div class="timeline-item">
                     <span class="item-tag">CIVIL</span>
                     <h3>Viernes 16 de Abril, 2027</h3>
@@ -70,21 +73,23 @@
                         <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Civil+Roc%C3%ADo+%26+Dami%C3%A1n&dates=20270416/20270417&details=Civil+en+Registro+Civil+de+San+Miguel&sf=true&output=xml" target="_blank">AGENDAR →</a>
                     </div>
                 </div>
-
                 <div class="timeline-divider"></div>
+            </div>
 
-                <div class="timeline-item">
-                    <span class="item-tag">CEREMONIA & FIESTA</span>
-                    <h3>Sábado 24 de Abril, 2027</h3>
-                    <p class="item-venue">Buenos Aires Golf Club</p>
-                    <div class="item-links">
-                        <a href="https://maps.google.com/?q=Buenos+Aires+Golf+Club" target="_blank">VER MAPA →</a>
-                        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+Roc%C3%ADo+%26+Dami%C3%A1n&dates=20270424/20270425&details=Boda+en+Buenos+Aires+Golf+Club&sf=true&output=xml" target="_blank">AGENDAR →</a>
-                    </div>
+            <!-- FIESTA -->
+            <div class="timeline-item">
+                <span class="item-tag">CEREMONIA & FIESTA</span>
+                <h3>Sábado 24 de Abril, 2027</h3>
+                <p class="item-venue">Buenos Aires Golf Club</p>
+                <div class="item-links">
+                    <a href="https://maps.google.com/?q=Buenos+Aires+Golf+Club" target="_blank">VER MAPA →</a>
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+Roc%C3%ADo+%26+Dami%C3%A1n&dates=20270424/20270425&details=Boda+en+Buenos+Aires+Golf+Club&sf=true&output=xml" target="_blank">AGENDAR →</a>
                 </div>
             </div>
+
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- DRESS CODE -->
     <section class="section">
@@ -121,11 +126,21 @@
         </div>
     </section>
 
-    <!-- RSVP -->
-    <section class="section" id="rsvp">
-        <div class="container fade-in">
-            <p class="section-label">CONFIRMACIÓN DE ASISTENCIA</p>
-            <h2>RSVP</h2>
+ <!-- RSVP -->
+<section class="section" id="rsvp">
+    <div class="container fade-in">
+        <p class="section-label">CONFIRMACIÓN DE ASISTENCIA</p>
+        <h2>RSVP</h2>
+
+    
+        <div id="rsvp-no-access" style="display: none; text-align: center; margin-top: 20px;">
+            <p style="font-size: 1.1rem; color: #666;">
+                Para confirmar tu asistencia, por favor ingresá mediante el enlace personalizado que te enviamos por mensaje.
+            </p>
+        </div>
+
+      
+        <div id="rsvp-form-container">
             <p class="rsvp-passes-count" id="rsvp-passes-count">LUGARES DISPONIBLES: 1</p>
 
             <!-- Tarjeta de Invitación Exclusiva -->
@@ -144,7 +159,7 @@
                 <div class="field" style="margin-top: 20px;">
                     <input type="text" id="guest-message" placeholder="Mensaje para los novios (opcional)">
                 </div>
-<br>
+                <br>
                 <button type="submit" id="btn-submit-rsvp" class="btn-solid">CONFIRMAR ASISTENCIA</button>
             </form>
 
@@ -153,8 +168,9 @@
                 <p>Tu respuesta ha sido registrada con éxito.</p>
             </div>
         </div>
-    </section>
 
+    </div>
+</section>
     <!-- DRIVE -->
     <section class="section bg-soft">
         <div class="container fade-in">

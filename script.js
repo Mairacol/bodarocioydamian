@@ -62,7 +62,7 @@ function initCustomRSVP() {
         civilItem.style.display = hasCivil ? 'block' : 'none';
     }
 
-    // FORMATEAR NOMBRE DEL INVITADO PRINCIPAL (para mostrar en la tarjeta VIP)
+    // FORMATEAR NOMBRE DEL INVITADO PRINCIPAL
     let guestParamRaw = decodeURIComponent(rawGuestParam.replace(/\+/g, ' '));
 
     // ETIQUETA ADAPTATIVA SEGÚN ABREVIATURAS
@@ -236,17 +236,24 @@ function handleRSVP(event) {
         body: JSON.stringify(payload)
     })
     .then(() => {
-        const rsvpForm = document.getElementById('rsvp-form');
-        const vipCard = document.querySelector('.vip-card');
-        const passesCount = document.getElementById('rsvp-passes-count');
+        const rsvpFormContainer = document.getElementById('rsvp-form-container');
         const modal = document.getElementById('rsvp-modal');
         
-        // Ocultar la tarjeta VIP y el formulario sin mover el viewport
-        if (rsvpForm) rsvpForm.style.display = 'none';
-        if (vipCard) vipCard.style.display = 'none';
-        if (passesCount) passesCount.style.display = 'none';
+        // Reemplaza el contenido del RSVP por un estado limpio de confirmación
+        if (rsvpFormContainer) {
+            rsvpFormContainer.innerHTML = `
+                <div style="padding: 10px 0 20px; text-align: center;">
+                    <p style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--accent); letter-spacing: 2px; text-transform: uppercase;">
+                        Respuesta Registrada
+                    </p>
+                    <p style="font-size: 0.85rem; color: var(--muted); letter-spacing: 1px; margin-top: 6px;">
+                        ¡Muchas gracias por responder a nuestra invitación!
+                    </p>
+                </div>
+            `;
+        }
 
-        // Abrir Modal de Agradecimiento
+        // Despliega el Popup Modal por encima
         if (modal) {
             modal.style.display = 'flex';
             setTimeout(() => {

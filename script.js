@@ -197,24 +197,28 @@ function handleRSVP(event) {
     const guestsList = [];
 
     guestCards.forEach((card, index) => {
+        const i = index + 1;
         const firstNameInput = card.querySelector('.input-guest-firstname');
         const lastNameInput = card.querySelector('.input-guest-lastname');
         
-        const partyRadio = card.querySelector(`input[name="party_attendance_${index + 1}"]:checked`);
-        const civilRadio = card.querySelector(`input[name="civil_attendance_${index + 1}"]:checked`);
+        // CORRECCIÓN: Búsqueda exacta del radio marcado según el número de tarjeta (i)
+        const partyRadio = card.querySelector(`input[name="party_attendance_${i}"]:checked`);
+        const civilRadio = card.querySelector(`input[name="civil_attendance_${i}"]:checked`);
         const dietSelect = card.querySelector('.input-guest-diet');
 
         const firstName = firstNameInput ? firstNameInput.value.trim() : '';
         const lastName = lastNameInput ? lastNameInput.value.trim() : '';
         const fullName = `${firstName} ${lastName}`.trim();
 
+        // Obtener el valor real marcado
+        const asistenciaFiestaVal = partyRadio ? partyRadio.value : 'Confirmado';
         const asistenciaCivilVal = hasCivil 
             ? (civilRadio ? civilRadio.value : 'Confirmado')
             : 'No invitado';
 
         guestsList.push({
             nombre: fullName,
-            asistenciaFiesta: partyRadio ? partyRadio.value : 'Confirmado',
+            asistenciaFiesta: asistenciaFiestaVal,
             asistenciaCivil: asistenciaCivilVal,
             restricciones: dietSelect ? dietSelect.value : 'Menú general'
         });

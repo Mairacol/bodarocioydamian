@@ -62,7 +62,7 @@ function initCustomRSVP() {
         civilItem.style.display = hasCivil ? 'block' : 'none';
     }
 
-    // FORMATEAR NOMBRE DEL INVITADO PRINCIPAL
+    // FORMATEAR NOMBRE DEL INVITADO PRINCIPAL (para mostrar en la tarjeta VIP)
     let guestParamRaw = decodeURIComponent(rawGuestParam.replace(/\+/g, ' '));
 
     // ETIQUETA ADAPTATIVA SEGÚN ABREVIATURAS
@@ -84,11 +84,6 @@ function initCustomRSVP() {
     const passesCountElem = document.getElementById('rsvp-passes-count');
     if (passesCountElem) passesCountElem.innerText = `LUGARES DISPONIBLES: ${passesParam}`;
 
-    // Extraer primer nombre/apellido para autocompletar campo 1
-    let firstGuestName = guestParamRaw.split(/ y | e | & |,/i)[0].trim();
-    let defaultFirstName = (firstGuestName !== "Invitado") ? firstGuestName.split(' ')[0] : '';
-    let defaultLastName = (firstGuestName !== "Invitado") ? firstGuestName.split(' ').slice(1).join(' ') : '';
-
     // GENERAR CAMPOS DE FORMULARIO
     const container = document.getElementById('guests-fields-container');
     if (!container) return;
@@ -98,9 +93,6 @@ function initCustomRSVP() {
     for (let i = 1; i <= passesParam; i++) {
         const guestBox = document.createElement('div');
         guestBox.className = 'guest-card-item';
-        
-        const firstNameValue = (i === 1) ? defaultFirstName : '';
-        const lastNameValue = (i === 1) ? defaultLastName : '';
 
         let guestTitle = `INVITADO ${i}`;
         if (passesParam === 1 && gParam === 'f') {
@@ -109,18 +101,18 @@ function initCustomRSVP() {
             guestTitle = `INVITADO`;
         }
 
-        // HTML base
+        // HTML base (inputs totalmente vacíos)
         let htmlContent = `
             <p class="guest-item-title">${guestTitle}</p>
 
             <div class="field-row">
                 <div class="field">
                     <span class="field-label-sub">NOMBRE</span>
-                    <input type="text" class="input-guest-firstname" placeholder="Tu nombre" required value="${firstNameValue}">
+                    <input type="text" class="input-guest-firstname" placeholder="Tu nombre" required value="">
                 </div>
                 <div class="field">
                     <span class="field-label-sub">APELLIDO</span>
-                    <input type="text" class="input-guest-lastname" placeholder="Tu apellido" required value="${lastNameValue}">
+                    <input type="text" class="input-guest-lastname" placeholder="Tu apellido" required value="">
                 </div>
             </div>
         `;
@@ -216,7 +208,6 @@ function handleRSVP(event) {
         const lastName = lastNameInput ? lastNameInput.value.trim() : '';
         const fullName = `${firstName} ${lastName}`.trim();
 
-        // Si no tiene tarjeta de civil, guarda 'No invitado' o duplica el valor de la fiesta
         const asistenciaCivilVal = hasCivil 
             ? (civilRadio ? civilRadio.value : 'Confirmado')
             : 'No invitado';
@@ -263,6 +254,7 @@ function handleRSVP(event) {
         }
     });
 }
+
 function toggleBankDetails() {
     const bankDetails = document.getElementById('bank-details');
     const toggleBtn = document.getElementById('toggle-bank-btn');
@@ -275,6 +267,7 @@ function toggleBankDetails() {
         toggleBtn.textContent = 'Ver datos bancarios';
     }
 }
+
 function copyAlias() {
     const aliasElem = document.getElementById('alias-text');
     if (!aliasElem) return;

@@ -133,20 +133,18 @@
     </div>
 </section>
 
- <!-- RSVP -->
+<!-- RSVP -->
 <section class="section" id="rsvp">
     <div class="container fade-in">
         <p class="section-label">CONFIRMACIÓN DE ASISTENCIA</p>
         <h2>RSVP</h2>
 
-    
         <div id="rsvp-no-access" style="display: none; text-align: center; margin-top: 20px;">
             <p style="font-size: 1.1rem; color: #666;">
                 Para confirmar tu asistencia, por favor ingresá mediante el enlace personalizado que te enviamos por mensaje.
             </p>
         </div>
 
-      
         <div id="rsvp-form-container">
             <p class="rsvp-passes-count" id="rsvp-passes-count">LUGARES DISPONIBLES: 1</p>
 
@@ -169,15 +167,21 @@
                 <br>
                 <button type="submit" id="btn-submit-rsvp" class="btn-solid">CONFIRMAR ASISTENCIA</button>
             </form>
-
-            <div id="rsvp-success-msg" style="display: none;" class="success-clean">
-                <h3>¡Muchas Gracias!</h3>
-                <p>Tu respuesta ha sido registrada con éxito.</p>
-            </div>
         </div>
 
     </div>
 </section>
+
+<!-- MODAL DE AGRADECIMIENTO (Va fuera del container del RSVP para ocupar toda la pantalla) -->
+<div id="rsvp-modal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeRSVPModal()">&times;</button>
+        <span class="editorial-monogram">R & D</span>
+        <h3>¡Muchas Gracias!</h3>
+        <p>Tu respuesta ha sido registrada con éxito.</p>
+        <button type="button" class="btn-solid" onclick="closeRSVPModal()" style="margin-top: 25px;">CERRAR</button>
+    </div>
+</div>
     <!-- DRIVE -->
     <section class="section bg-soft">
         <div class="container fade-in">

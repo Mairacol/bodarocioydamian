@@ -201,7 +201,6 @@ function handleRSVP(event) {
         const firstNameInput = card.querySelector('.input-guest-firstname');
         const lastNameInput = card.querySelector('.input-guest-lastname');
         
-        // Obtener elementos radio seleccionados directamente desde la tarjeta actual
         const partyRadio = card.querySelector(`input[name="party_attendance_${i}"]:checked`);
         const civilRadio = card.querySelector(`input[name="civil_attendance_${i}"]:checked`);
         const dietSelect = card.querySelector('.input-guest-diet');
@@ -210,7 +209,6 @@ function handleRSVP(event) {
         const lastName = lastNameInput ? lastNameInput.value.trim() : '';
         const fullName = `${firstName} ${lastName}`.trim();
 
-        // Obtener el valor exacto seleccionado en el formulario
         const asistenciaFiestaVal = partyRadio ? partyRadio.value : 'No asistirá';
         const asistenciaCivilVal = hasCivil 
             ? (civilRadio ? civilRadio.value : 'No asistirá')
@@ -241,13 +239,20 @@ function handleRSVP(event) {
         const rsvpForm = document.getElementById('rsvp-form');
         const vipCard = document.querySelector('.vip-card');
         const passesCount = document.getElementById('rsvp-passes-count');
-        const successMsg = document.getElementById('rsvp-success-msg');
+        const modal = document.getElementById('rsvp-modal');
         
+        // Ocultar la tarjeta VIP y el formulario sin mover el viewport
         if (rsvpForm) rsvpForm.style.display = 'none';
         if (vipCard) vipCard.style.display = 'none';
         if (passesCount) passesCount.style.display = 'none';
 
-        if (successMsg) successMsg.style.display = 'block';
+        // Abrir Modal de Agradecimiento
+        if (modal) {
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
+        }
     })
     .catch(error => {
         console.error('Error:', error);
@@ -257,6 +262,16 @@ function handleRSVP(event) {
             btnSubmit.innerText = 'CONFIRMAR ASISTENCIA';
         }
     });
+}
+
+function closeRSVPModal() {
+    const modal = document.getElementById('rsvp-modal');
+    if (modal) {
+        modal.classList.remove('active');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 400);
+    }
 }
 
 function toggleBankDetails() {

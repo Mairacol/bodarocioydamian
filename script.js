@@ -76,11 +76,11 @@ function initCustomRSVP() {
     const vipLabelElem = document.querySelector('.vip-label');
     if (vipLabelElem) {
         if (passesParam > 1) {
-            vipLabelElem.innerText = "INVITACIÓN EXCLUSIVA PARA LOS INVITADOS";
+            vipLabelElem.innerText = "INVITACIÓN EXCLUSIVA PARA ";
         } else if (gParam === 'f') {
-            vipLabelElem.innerText = "INVITACIÓN EXCLUSIVA PARA LA INVITADA";
+            vipLabelElem.innerText = "INVITACIÓN EXCLUSIVA PARA ";
         } else {
-            vipLabelElem.innerText = "INVITACIÓN EXCLUSIVA PARA EL INVITADO";
+            vipLabelElem.innerText = "INVITACIÓN EXCLUSIVA PARA";
         }
     }
 
@@ -175,7 +175,7 @@ function handleRSVP(event) {
             restricciones: dietInput ? dietInput.value : ''
         });
     });
-    
+
     const payload = {
         invitadoPrincipal: mainGuest,
         mensaje: message,

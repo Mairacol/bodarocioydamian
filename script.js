@@ -101,7 +101,7 @@ function initCustomRSVP() {
             guestTitle = `INVITADO`;
         }
 
-        // HTML base (inputs totalmente vacíos)
+        // HTML base
         let htmlContent = `
             <p class="guest-item-title">${guestTitle}</p>
 
@@ -201,7 +201,7 @@ function handleRSVP(event) {
         const firstNameInput = card.querySelector('.input-guest-firstname');
         const lastNameInput = card.querySelector('.input-guest-lastname');
         
-        // CORRECCIÓN: Búsqueda exacta del radio marcado según el número de tarjeta (i)
+        // Obtener elementos radio seleccionados directamente desde la tarjeta actual
         const partyRadio = card.querySelector(`input[name="party_attendance_${i}"]:checked`);
         const civilRadio = card.querySelector(`input[name="civil_attendance_${i}"]:checked`);
         const dietSelect = card.querySelector('.input-guest-diet');
@@ -210,10 +210,10 @@ function handleRSVP(event) {
         const lastName = lastNameInput ? lastNameInput.value.trim() : '';
         const fullName = `${firstName} ${lastName}`.trim();
 
-        // Obtener el valor real marcado
-        const asistenciaFiestaVal = partyRadio ? partyRadio.value : 'Confirmado';
+        // Obtener el valor exacto seleccionado en el formulario
+        const asistenciaFiestaVal = partyRadio ? partyRadio.value : 'No asistirá';
         const asistenciaCivilVal = hasCivil 
-            ? (civilRadio ? civilRadio.value : 'Confirmado')
+            ? (civilRadio ? civilRadio.value : 'No asistirá')
             : 'No invitado';
 
         guestsList.push({

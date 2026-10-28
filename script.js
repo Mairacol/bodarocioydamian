@@ -55,14 +55,11 @@ function initCustomRSVP() {
     const passesParam = parseInt(urlParams.get('pases') || urlParams.get('cupos')) || 1;
     const gParam = (urlParams.get('g') || '').toLowerCase(); 
     const venueParam = (urlParams.get('venue') || '').toLowerCase();
+    const hasCivil = (venueParam === 'cyf' || urlParams.get('civil') === '1');
 
-    // CONTROL DE VISIBILIDAD DEL CIVIL
+    // CONTROL DE VISIBILIDAD DEL CIVIL EN CRONOGRAMA
     if (civilItem) {
-        if (venueParam === 'cyf' || urlParams.get('civil') === '1') {
-            civilItem.style.display = 'block';
-        } else {
-            civilItem.style.display = 'none';
-        }
+        civilItem.style.display = hasCivil ? 'block' : 'none';
     }
 
     // FORMATEAR NOMBRE DEL INVITADO PRINCIPAL
@@ -72,11 +69,11 @@ function initCustomRSVP() {
     const vipLabelElem = document.querySelector('.vip-label');
     if (vipLabelElem) {
         if (passesParam > 1) {
-            vipLabelElem.innerText = "INVITACIÓN EXCLUSIVA PARA LOS INVITADOS";
+            vipLabelElem.innerText = "INVITACIÓN EXCLUSIVA PARA";
         } else if (gParam === 'f') {
-            vipLabelElem.innerText = "INVITACIÓN EXCLUSIVA PARA LA INVITADA";
+            vipLabelElem.innerText = "INVITACIÓN EXCLUSIVA PARA ";
         } else {
-            vipLabelElem.innerText = "INVITACIÓN EXCLUSIVA PARA EL INVITADO";
+            vipLabelElem.innerText = "INVITACIÓN EXCLUSIVA PARA";
         }
     }
 
@@ -87,7 +84,7 @@ function initCustomRSVP() {
     const passesCountElem = document.getElementById('rsvp-passes-count');
     if (passesCountElem) passesCountElem.innerText = `LUGARES DISPONIBLES: ${passesParam}`;
 
-    // Extraer primer nombre/apellido tentativo para autocompletar el campo 1
+    // Extraer primer nombre/apellido para autocompletar campo 1
     let firstGuestName = guestParamRaw.split(/ y | e | & |,/i)[0].trim();
     let defaultFirstName = (firstGuestName !== "Invitado") ? firstGuestName.split(' ')[0] : '';
     let defaultLastName = (firstGuestName !== "Invitado") ? firstGuestName.split(' ').slice(1).join(' ') : '';
@@ -112,39 +109,71 @@ function initCustomRSVP() {
             guestTitle = `INVITADO`;
         }
 
-        guestBox.innerHTML = `
+        // HTML base
+        let htmlContent = `
             <p class="guest-item-title">${guestTitle}</p>
 
-            <div class="field">
-                <input type="text" class="input-guest-firstname" placeholder="Nombre" required value="${firstNameValue}">
+            <div class="field-row">
+                <div class="field">
+                    <span class="field-label-sub">NOMBRE</span>
+                    <input type="text" class="input-guest-firstname" placeholder="Tu nombre" required value="${firstNameValue}">
+                </div>
+                <div class="field">
+                    <span class="field-label-sub">APELLIDO</span>
+                    <input type="text" class="input-guest-lastname" placeholder="Tu apellido" required value="${lastNameValue}">
+                </div>
             </div>
+        `;
 
-            <div class="field">
-                <input type="text" class="input-guest-lastname" placeholder="Apellido" required value="${lastNameValue}">
-            </div>
+        // Pregunta de Civil (Solo si el link incluye venue=cyf)
+        if (hasCivil) {
+            htmlContent += `
+                <div class="field">
+                    <label class="field-label">¿ASISTÍS AL CIVIL?</label>
+                    <div class="attendance-toggle-group">
+                        <label class="toggle-option">
+                            <input type="radio" name="civil_attendance_${i}" value="Confirmado" checked>
+                            <span class="toggle-btn">SÍ, ALLÍ ESTARÉ</span>
+                        </label>
+                        <label class="toggle-option">
+                            <input type="radio" name="civil_attendance_${i}" value="No asistirá">
+                            <span class="toggle-btn">NO PODRÉ ASISTIR</span>
+                        </label>
+                    </div>
+                </div>
+            `;
+        }
 
+        // Pregunta de Fiesta y Selección de Menú
+        htmlContent += `
             <div class="field">
-                <label class="field-label">¿ASISTE?</label>
-                <div class="radio-group">
-                    <label class="radio-label">
-                        <input type="radio" name="attendance_${i}" value="Confirmado" checked> Sí, ahí estaré
+                <label class="field-label">${hasCivil ? '¿ASISTÍS A LA FIESTA?' : '¿NOS ACOMPAÑÁS?'}</label>
+                <div class="attendance-toggle-group">
+                    <label class="toggle-option">
+                        <input type="radio" name="party_attendance_${i}" value="Confirmado" checked>
+                        <span class="toggle-btn">SÍ, ALLÍ ESTARÉ</span>
                     </label>
-                    <label class="radio-label">
-                        <input type="radio" name="attendance_${i}" value="No asistirá"> No podré asistir
+                    <label class="toggle-option">
+                        <input type="radio" name="party_attendance_${i}" value="No asistirá">
+                        <span class="toggle-btn">NO PODRÉ ASISTIR</span>
                     </label>
                 </div>
             </div>
 
             <div class="field">
-                <label class="field-label">TIPO DE MENÚ</label>
-                <select class="input-guest-diet">
-                    <option value="Menú general" selected>Menú general</option>
-                    <option value="Sin TACC">Sin TACC</option>
-                    <option value="Vegetariano">Vegetariano</option>
-                    <option value="Vegano">Vegano</option>
-                </select>
+                <label class="field-label">SELECCIÓN DE MENÚ</label>
+                <div class="select-wrapper">
+                    <select class="input-guest-diet">
+                        <option value="Menú general" selected>Menú General</option>
+                        <option value="Sin TACC">Sin TACC (Celiaco)</option>
+                        <option value="Vegetariano">Vegetariano</option>
+                        <option value="Vegano">Vegano</option>
+                    </select>
+                </div>
             </div>
         `;
+
+        guestBox.innerHTML = htmlContent;
         container.appendChild(guestBox);
     }
 }
@@ -166,6 +195,8 @@ function handleRSVP(event) {
     
     let mainGuest = urlParams.get('invitado') || "Invitado";
     mainGuest = decodeURIComponent(mainGuest.replace(/\+/g, ' '));
+    const venueParam = (urlParams.get('venue') || '').toLowerCase();
+    const hasCivil = (venueParam === 'cyf' || urlParams.get('civil') === '1');
 
     const messageInput = document.getElementById('guest-message');
     const message = messageInput ? messageInput.value : '';
@@ -176,16 +207,24 @@ function handleRSVP(event) {
     guestCards.forEach((card, index) => {
         const firstNameInput = card.querySelector('.input-guest-firstname');
         const lastNameInput = card.querySelector('.input-guest-lastname');
-        const attendanceRadio = card.querySelector(`input[name="attendance_${index + 1}"]:checked`);
+        
+        const partyRadio = card.querySelector(`input[name="party_attendance_${index + 1}"]:checked`);
+        const civilRadio = card.querySelector(`input[name="civil_attendance_${index + 1}"]:checked`);
         const dietSelect = card.querySelector('.input-guest-diet');
 
         const firstName = firstNameInput ? firstNameInput.value.trim() : '';
         const lastName = lastNameInput ? lastNameInput.value.trim() : '';
         const fullName = `${firstName} ${lastName}`.trim();
 
+        // Si no tiene tarjeta de civil, guarda 'No invitado' o duplica el valor de la fiesta
+        const asistenciaCivilVal = hasCivil 
+            ? (civilRadio ? civilRadio.value : 'Confirmado')
+            : 'No invitado';
+
         guestsList.push({
             nombre: fullName,
-            asistencia: attendanceRadio ? attendanceRadio.value : 'Confirmado',
+            asistenciaFiesta: partyRadio ? partyRadio.value : 'Confirmado',
+            asistenciaCivil: asistenciaCivilVal,
             restricciones: dietSelect ? dietSelect.value : 'Menú general'
         });
     });
@@ -209,12 +248,10 @@ function handleRSVP(event) {
         const passesCount = document.getElementById('rsvp-passes-count');
         const successMsg = document.getElementById('rsvp-success-msg');
         
-        // Ocultar la tarjeta VIP, el contador y el formulario
         if (rsvpForm) rsvpForm.style.display = 'none';
         if (vipCard) vipCard.style.display = 'none';
         if (passesCount) passesCount.style.display = 'none';
 
-        // Mostrar solo el mensaje de éxito
         if (successMsg) successMsg.style.display = 'block';
     })
     .catch(error => {

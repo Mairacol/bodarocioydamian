@@ -160,6 +160,7 @@ function initCustomRSVP() {
                         <option value="Sin TACC">Sin TACC (Celiaco)</option>
                         <option value="Vegetariano">Vegetariano</option>
                         <option value="Vegano">Vegano</option>
+                        <option value="Intolerante a la lactosa">Intolerante a la lactosa</option>
                     </select>
                 </div>
             </div>

@@ -57,10 +57,7 @@
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
 }
-* {
-  text-decoration: none;
-  color: inherit;
-}
+
 body {
     background-color: var(--bg);
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .32  0 0 0 0 .29  0 0 0 0 .25  0 0 0 .09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
@@ -432,17 +429,32 @@ body {
 /* ---------- REGALOS ---------- */
 .btn-toggle-bank {
     background-color: transparent;
+    color: #1D1D1D;
+    -webkit-text-fill-color: #1D1D1D;
+    -webkit-appearance: none;
+    appearance: none;
     border: 1px solid #1D1D1D;
+    border-radius: 0;
     padding: 11px 24px;
     font-family: var(--font-sans);
     font-size: 0.75rem;
     cursor: pointer;
     margin-bottom: 18px;
-    transition: all 0.3s ease;
+    outline: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
-.btn-toggle-bank:hover {
+/* el hover solo en computadoras: en el celular se queda "pegado" después de tocar */
+@media (hover: hover) {
+    .btn-toggle-bank:hover {
+        background-color: #1D1D1D;
+        color: #fff;
+        -webkit-text-fill-color: #fff;
+    }
+}
+.btn-toggle-bank:active {
     background-color: #1D1D1D;
     color: #fff;
+    -webkit-text-fill-color: #fff;
 }
 
 .bank-clean {
@@ -737,7 +749,7 @@ select.input-guest-diet {
 .modal-close:hover { color: #000; }
 
 .modal-content h3 {
-    font-family: var(--font-serif-alt);
+    font-family: var(--font-script);
     font-size: 2.6rem;
     font-weight: normal;
     color: var(--text);

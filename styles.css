@@ -179,7 +179,7 @@ body {
 
 .cover-invite { margin-bottom: 50px; }
 .cover-invite p {
-    font-size: 0.88rem;
+    font-size: 0.97rem;
     color: var(--muted);
     line-height: 1.7;
     margin-bottom: 16px;
@@ -280,7 +280,7 @@ body {
     text-align: center;
 }
 .small-caption {
-    font-size: 0.88rem;
+    font-size: 0.97rem;
     color: var(--muted);
     line-height: 1.7;
     margin-bottom: 22px;
